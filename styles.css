@@ -1,0 +1,36 @@
+/* Glassmorphism & Custom Elements */
+.engine-card.active {
+  border-color: #3b82f6 !important;
+  background-color: rgba(59, 130, 246, 0.1) !important;
+  box-shadow: 0 0 15px rgba(59, 130, 246, 0.2);
+}
+
+.preset-btn.active {
+  background-color: #2563eb !important;
+  color: #ffffff !important;
+  font-weight: 600;
+}
+
+/* Custom Scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0b0f17;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #1f2937;
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #374151;
+}
+
+/* Code area selection pulse */
+textarea:focus {
+  box-shadow: 0 0 12px rgba(59, 130, 246, 0.15);
+}
