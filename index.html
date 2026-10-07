@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="es" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lexy Protect | Advanced Lua Obfuscator Suite</title>
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#eff6ff',
+              100: '#dbeafe',
+              500: '#3b82f6',
+              600: '#2563eb',
+              700: '#1d4ed8',
+              800: '#1e40af',
+              900: '#1e3a8a',
+              glow: '#60a5fa'
+            },
+            dark: {
+              base: '#0b0f17',
+              surface: '#111827',
+              card: '#1f2937',
+              border: '#374151',
+              muted: '#4b5563'
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Google Fonts & FontAwesome icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="bg-dark-base text-gray-200 font-sans antialiased selection:bg-brand-500 selection:text-white min-h-screen flex flex-col">
+
+  <!-- TOP NAVBAR -->
+  <header class="border-b border-slate-800 bg-dark-surface/80 backdrop-blur-md sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-brand-600 to-blue-400 flex items-center justify-center shadow-lg shadow-brand-500/20">
+          <i class="fa-solid me-0 fa-shield-halved text-white text-xl"></i>
+        </div>
+        <div>
+          <h1 class="text-lg font-bold tracking-wide text-white flex items-center gap-2">
+            Lexy Protect <span class="text-xs font-semibold px-2 py-0.5 rounded-full bg-brand-500/20 text-brand-400 border border-brand-500/30">v2.0</span>
+          </h1>
+          <p class="text-xs text-gray-400">Enterprise Lua Security Suite</p>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-3">
+        <button id="apiConfigBtn" class="flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-medium bg-dark-card border border-slate-700 hover:border-brand-500 text-gray-300 hover:text-white transition-all">
+          <i class="fa-solid fa-key text-brand-400"></i>
+          <span>API Keys</span>
+        </button>
+        <a href="https://github.com" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-medium bg-slate-800 hover:bg-slate-700 text-gray-300 hover:text-white transition-all">
+          <i class="fa-brands fa-github text-base"></i>
+          <span class="hidden sm:inline">GitHub</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN CONTAINER -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex-1 w-full grid grid-cols-1 lg:grid-cols-12 gap-6">
+
+    <!-- LEFT PANEL: CONFIGURATION -->
+    <aside class="lg:col-span-4 flex flex-col gap-6">
+      <div class="bg-dark-surface border border-slate-800 rounded-2xl p-5 shadow-xl flex flex-col gap-5">
+        
+        <!-- ENGINE SELECTOR -->
+        <div>
+          <label class="text-xs font-bold text-gray-400 uppercase tracking-wider block mb-2.5">
+            <i class="fa-solid fa-microchip text-brand-400 mr-1.5"></i> Motor de Ofuscación
+          </label>
+          <div class="grid grid-cols-3 gap-2">
+            <button type="button" data-engine="prometheus" class="engine-card active flex flex-col items-center justify-center p-3 rounded-xl border border-slate-700 bg-dark-card text-gray-300 hover:border-brand-500 transition-all">
+              <i class="fa-solid fa-fire text-lg text-orange-400 mb-1"></i>
+              <span class="text-xs font-semibold">Prometheus</span>
+            </button>
+            <button type="button" data-engine="voltfuscator" class="engine-card flex flex-col items-center justify-center p-3 rounded-xl border border-slate-700 bg-dark-card text-gray-300 hover:border-brand-500 transition-all">
+              <i class="fa-solid fa-bolt text-lg text-yellow-400 mb-1"></i>
+              <span class="text-xs font-semibold">Voltfuscator</span>
+            </button>
+            <button type="button" data-engine="winfuscator" class="engine-card flex flex-col items-center justify-center p-3 rounded-xl border border-slate-700 bg-dark-card text-gray-300 hover:border-brand-500 transition-all">
+              <i class="fa-solid fa-cubes text-lg text-blue-400 mb-1"></i>
+              <span class="text-xs font-semibold">Winfuscator</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- PRESETS -->
+        <div>
+          <label class="text-xs font-bold text-gray-400 uppercase tracking-wider block mb-2.5">
+            <i class="fa-solid fa-sliders text-brand-400 mr-1.5"></i> Nivel de Presets
+          </label>
+          <div class="grid grid-cols-4 gap-1.5 p-1 bg-dark-base rounded-xl border border-slate-800">
+            <button type="button" data-preset="low" class="preset-btn py-1.5 text-xs font-medium rounded-lg text-gray-400 hover:text-white transition-all">Low</button>
+            <button type="button" data-preset="medium" class="preset-btn active py-1.5 text-xs font-medium rounded-lg text-gray-400 hover:text-white transition-all">Medium</button>
+            <button type="button" data-preset="high" class="preset-btn py-1.5 text-xs font-medium rounded-lg text-gray-400 hover:text-white transition-all">High</button>
+            <button type="button" data-preset="hardcore" class="preset-btn py-1.5 text-xs font-medium rounded-lg text-gray-400 hover:text-white transition-all">Hardcore</button>
+          </div>
+        </div>
+
+        <!-- SECURITY TOGGLES -->
+        <div>
+          <label class="text-xs font-bold text-gray-400 uppercase tracking-wider block mb-2.5">
+            <i class="fa-solid fa-shield-cat text-brand-400 mr-1.5"></i> Módulos de Seguridad
+          </label>
+          <div class="space-y-2.5 bg-dark-base p-3.5 rounded-xl border border-slate-800">
+            
+            <label class="flex items-center justify-between cursor-pointer group">
+              <span class="text-xs font-medium text-gray-300 group-hover:text-white transition-colors">
+                <i class="fa-solid fa-lock text-brand-400 w-4"></i> Anti-Dump Protection
+              </span>
+              <input type="checkbox" id="chkAntiDump" class="sr-only peer" checked>
+              <div class="w-9 h-5 bg-slate-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-brand-600 relative"></div>
+            </label>
+
+            <label class="flex items-center justify-between cursor-pointer group">
+              <span class="text-xs font-medium text-gray-300 group-hover:text-white transition-colors">
+                <i class="fa-solid fa-eye-slash text-brand-400 w-4"></i> Anti-Spy / Remote Blocking
+              </span>
+              <input type="checkbox" id="chkAntiSpy" class="sr-only peer" checked>
+              <div class="w-9 h-5 bg-slate-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-brand-600 relative"></div>
+            </label>
+
+            <label class="flex items-center justify-between cursor-pointer group">
+              <span class="text-xs font-medium text-gray-300 group-hover:text-white transition-colors">
+                <i class="fa-solid fa-bug text-brand-400 w-4"></i> Anti-Decompiler & Crasher
+              </span>
+              <input type="checkbox" id="chkAntiDecompile" class="sr-only peer" checked>
+              <div class="w-9 h-5 bg-slate-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-brand-600 relative"></div>
+            </label>
+
+            <label class="flex items-center justify-between cursor-pointer group">
+              <span class="text-xs font-medium text-gray-300 group-hover:text-white transition-colors">
+                <i class="fa-solid fa-network-wired text-brand-400 w-4"></i> Control Flow Flattening (CFF)
+              </span>
+              <input type="checkbox" id="chkCFF" class="sr-only peer" checked>
+              <div class="w-9 h-5 bg-slate-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-brand-600 relative"></div>
+            </label>
+
+            <label class="flex items-center justify-between cursor-pointer group">
+              <span class="text-xs font-medium text-gray-300 group-hover:text-white transition-colors">
+                <i class="fa-solid fa-font text-brand-400 w-4"></i> Dynamic String Encryption
+              </span>
+              <input type="checkbox" id="chkEncryptStrings" class="sr-only peer" checked>
+              <div class="w-9 h-5 bg-slate-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-brand-600 relative"></div>
+            </label>
+
+          </div>
+        </div>
+
+        <!-- WATERMARK INPUT -->
+        <div>
+          <label class="text-xs font-bold text-gray-400 uppercase tracking-wider block mb-1.5" for="watermarkInput">
+            <i class="fa-solid fa-signature text-brand-400 mr-1.5"></i> Custom Watermark
+          </label>
+          <input type="text" id="watermarkInput" placeholder="-- Protected by Lexy Protect" value="-- Protected by Lexy Protect v2.0" class="w-full bg-dark-base border border-slate-800 focus:border-brand-500 text-xs text-gray-200 px-3 py-2 rounded-xl focus:outline-none transition-all font-mono">
+        </div>
+
+        <!-- ACTION BUTTON -->
+        <button id="obfuscateBtn" class="w-full py-3.5 px-4 bg-gradient-to-r from-brand-600 to-brand-500 hover:from-brand-500 hover:to-brand-400 text-white font-bold text-sm rounded-xl shadow-lg shadow-brand-600/30 active:scale-[0.98] transition-all flex items-center justify-center gap-2">
+          <i class="fa-solid fa-wand-magic-sparkles"></i>
+          <span>OBFUSCAR CÓDIGO</span>
+        </button>
+
+      </div>
+    </aside>
+
+    <!-- RIGHT PANEL: WORKBENCH -->
+    <section class="lg:col-span-8 flex flex-col gap-6">
+
+      <!-- INPUT & OUTPUT EDITORS -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 flex-1">
+        
+        <!-- SOURCE LUA INPUT -->
+        <div class="bg-dark-surface border border-slate-800 rounded-2xl p-4 flex flex-col shadow-xl">
+          <div class="flex items-center justify-between pb-3 mb-2 border-b border-slate-800">
+            <span class="text-xs font-bold text-gray-300 flex items-center gap-2">
+              <i class="fa-solid fa-code text-brand-400"></i> Código Lua Original
+            </span>
+            <div class="flex items-center gap-2">
+              <button id="clearInputBtn" class="text-xs text-gray-500 hover:text-red-400 transition-colors" title="Limpiar código">
+                <i class="fa-solid fa-trash-can"></i>
+              </button>
+              <button id="pasteInputBtn" class="text-xs text-gray-400 hover:text-white transition-colors" title="Pegar del portapapeles">
+                <i class="fa-solid fa-paste"></i>
+              </button>
+            </div>
+          </div>
+          
+          <textarea id="sourceCode" spellcheck="false" placeholder="-- Pega tu script Lua aquí
+local player = game.Players.LocalPlayer
+print('Hola ' .. player.Name)
+" class="w-full flex-1 min-h-[320px] bg-dark-base text-gray-100 font-mono text-xs p-3 rounded-xl border border-slate-800/80 focus:border-brand-500 focus:outline-none resize-none leading-relaxed"></textarea>
+          
+          <div class="flex items-center justify-between pt-3 mt-2 text-[11px] text-gray-500">
+            <span id="sourceStats">Líneas: 0 | Caracteres: 0</span>
+            <span class="font-mono text-brand-400">Luau / Lua 5.1</span>
+          </div>
+        </div>
+
+        <!-- OBFUSCATED LUA OUTPUT -->
+        <div class="bg-dark-surface border border-slate-800 rounded-2xl p-4 flex flex-col shadow-xl">
+          <div class="flex items-center justify-between pb-3 mb-2 border-b border-slate-800">
+            <span class="text-xs font-bold text-gray-300 flex items-center gap-2">
+              <i class="fa-solid fa-file-shield text-emerald-400"></i> Resultado Ofuscado
+            </span>
+            <div class="flex items-center gap-2">
+              <button id="copyOutputBtn" class="text-xs text-gray-400 hover:text-brand-400 transition-colors px-2 py-1 rounded bg-slate-800 hover:bg-slate-700 flex items-center gap-1">
+                <i class="fa-solid fa-copy"></i> Copiar
+              </button>
+              <button id="downloadOutputBtn" class="text-xs text-gray-400 hover:text-emerald-400 transition-colors px-2 py-1 rounded bg-slate-800 hover:bg-slate-700 flex items-center gap-1">
+                <i class="fa-solid fa-download"></i> .lua
+              </button>
+            </div>
+          </div>
+
+          <textarea id="outputCode" readonly spellcheck="false" placeholder="El código protegido aparecerá aquí..." class="w-full flex-1 min-h-[320px] bg-dark-base text-emerald-400 font-mono text-xs p-3 rounded-xl border border-slate-800/80 focus:outline-none resize-none leading-relaxed"></textarea>
+
+          <div class="flex items-center justify-between pt-3 mt-2 text-[11px] text-gray-500">
+            <span id="outputStats">Tamaño: 0 KB</span>
+            <span id="ratioBadge" class="font-mono text-gray-400">Ratio: 0%</span>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- LIVE TERMINAL / PROCESS LOG -->
+      <div class="bg-dark-surface border border-slate-800 rounded-2xl p-4 shadow-xl">
+        <div class="flex items-center justify-between pb-2 mb-2 border-b border-slate-800">
+          <span class="text-xs font-bold text-gray-400 uppercase tracking-wider flex items-center gap-2">
+            <i class="fa-solid fa-terminal text-brand-400"></i> Terminal de Ejecución
+          </span>
+          <span id="statusIndicator" class="flex items-center gap-1.5 text-[11px] text-gray-400">
+            <span class="w-2 h-2 rounded-full bg-emerald-500"></span> Listo
+          </span>
+        </div>
+        <div id="terminalLog" class="bg-dark-base p-3 rounded-xl font-mono text-xs text-gray-400 h-28 overflow-y-auto space-y-1 border border-slate-800">
+          <p class="text-gray-500">[SYSTEM] Lexy Protect v2.0 inicializado correctamente.</p>
+          <p class="text-gray-500">[SYSTEM] Selecciona un motor y presiona 'OBFUSCAR CÓDIGO'.</p>
+        </div>
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- MODAL: API KEYS CONFIG -->
+  <div id="apiModal" class="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 flex items-center justify-center hidden opacity-0 transition-opacity">
+    <div class="bg-dark-surface border border-slate-800 rounded-2xl p-6 max-w-md w-full mx-4 shadow-2xl flex flex-col gap-4">
+      <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+        <h3 class="text-sm font-bold text-white flex items-center gap-2">
+          <i class="fa-solid fa-key text-brand-400"></i> Configuración de API Keys
+        </h3>
+        <button id="closeApiModal" class="text-gray-400 hover:text-white"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      
+      <p class="text-xs text-gray-400 leading-relaxed">
+        Ingresa tus claves de API privadas para cada motor. Si las dejas vacías, el sistema utilizará el motor de simulación virtual local.
+      </p>
+
+      <div class="space-y-3">
+        <div>
+          <label class="text-[11px] font-semibold text-gray-300 block mb-1">Prometheus API Key</label>
+          <input type="password" id="keyPrometheus" placeholder="pr_live_xxxxxxxxxxxx" class="w-full bg-dark-base border border-slate-800 focus:border-brand-500 text-xs text-gray-200 px-3 py-2 rounded-xl font-mono focus:outline-none">
+        </div>
+        <div>
+          <label class="text-[11px] font-semibold text-gray-300 block mb-1">Voltfuscator Bearer Token</label>
+          <input type="password" id="keyVolt" placeholder="Bearer volt_xxxxxxxxxxxx" class="w-full bg-dark-base border border-slate-800 focus:border-brand-500 text-xs text-gray-200 px-3 py-2 rounded-xl font-mono focus:outline-none">
+        </div>
+        <div>
+          <label class="text-[11px] font-semibold text-gray-300 block mb-1">Winfuscator API Key</label>
+          <input type="password" id="keyWin" placeholder="win_xxxxxxxxxxxx" class="w-full bg-dark-base border border-slate-800 focus:border-brand-500 text-xs text-gray-200 px-3 py-2 rounded-xl font-mono focus:outline-none">
+        </div>
+      </div>
+
+      <div class="flex justify-end gap-2 pt-2 border-t border-slate-800">
+        <button id="saveApiKeysBtn" class="px-4 py-2 bg-brand-600 hover:bg-brand-500 text-white font-semibold text-xs rounded-xl transition-all">
+          Guardar Cambios
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="border-t border-slate-800 bg-dark-surface py-4 mt-auto">
+    <div class="max-w-7xl mx-auto px-4 text-center text-xs text-gray-500">
+      &copy; 2026 Lexy Protect. Todos los derechos reservados. Diseñado para seguridad y protección en Lua.
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
